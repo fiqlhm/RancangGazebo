@@ -3,410 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator RAB & Desain Gazebo Pro (Detail)</title>
+    <title>woy 24</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts untuk tampilan yang lebih elegan -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Modern Geometris -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Styling */
+        /* --- DARK CONSTRUCTION THEME --- */
+        :root {
+            /* Palette: Dark Slate & Blueprint Blue */
+            --glass-surface: rgba(15, 23, 42, 0.75); 
+            --glass-border: rgba(255, 255, 255, 0.15); 
+            --glass-highlight: rgba(255, 255, 255, 0.2); 
+            --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); /* Bright Blue Accent */
+            --text-primary: #f8fafc; /* Slate 50 */
+            --text-secondary: #94a3b8; /* Slate 400 */
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            /* Background Scenery dengan Gradient Overlay */
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9)), 
-                        url('https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            /* Background Konstruksi Gelap (Night/Concrete) */
+            background-image: 
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.9)), 
+                url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #334155;
+            color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Glassmorphism Effect */
+        /* --- GLASSMORPHISM DARK PRO --- */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            box-shadow: 
+                var(--glass-shadow),
+                inset 0 0 30px rgba(255,255,255,0.03);
+            border-radius: 1.2rem;
+            transition: all 0.3s ease;
         }
 
-        .glass-header {
-            background: rgba(30, 27, 75, 0.85); /* Indigo-950 transparent */
-            backdrop-filter: blur(10px);
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- ANIMATIONS --- */
+        @keyframes liquidReveal {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .animate-enter {
-            animation: fadeInUp 0.6s ease-out forwards;
+            animation: liquidReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0; 
         }
-
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-
-        /* Glow Effects */
-        .glow-hover {
+        
+        /* --- FORM ELEMENTS (Dark Mode) --- */
+        .input-liquid {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: #f8fafc;
             transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
-        .glow-hover:hover {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6); /* Indigo Glow */
-            transform: translateY(-2px);
+        .input-liquid:focus {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            outline: none;
+        }
+        
+        select.input-liquid {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.2em 1.2em;
+        }
+        select.input-liquid option { background-color: #0f172a; color: #f8fafc; }
+
+        /* --- TABLES & CARDS (Dark) --- */
+        .card-detail {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
 
-        .input-glow:focus {
-            box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.5); /* Indigo ring */
-            border-color: #6366f1;
+        /* --- BUTTONS --- */
+        .btn-ocean {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+        .btn-ocean:hover {
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+            transform: translateY(-1px);
+        }
+        .btn-ocean:active { transform: scale(0.98); }
 
-        /* Custom Scrollbar */
-        .scroller::-webkit-scrollbar { width: 6px; }
-        .scroller::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-        .scroller::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .scroller::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        /* Print Styles */
+        /* --- PRINT --- */
         @media print {
+            body { background: white !important; color: black !important; }
             .no-print { display: none !important; }
             .print-only { display: block !important; }
-            body { background: white; color: black; font-size: 11px; font-family: sans-serif; } 
-            .card, .glass-panel { box-shadow: none; border: 1px solid #ccc; background: white; backdrop-filter: none; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #000 !important; padding: 4px; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            
+            .glass-panel, .card-detail { 
+                background: white !important; 
+                border: 1px solid #ddd !important; 
+                box-shadow: none !important; 
+                border-radius: 0 !important;
+                color: black !important;
+            }
+            .text-white, .text-gray-200, .text-gray-300, .text-gray-400 { color: black !important; }
             #view-rab, #view-ahsp { display: block !important; }
             #view-ahsp { page-break-before: always; margin-top: 20px; }
-            .report-tabs { display: none !important; }
+            table, th, td { border: 1px solid #000 !important; border-collapse: collapse; }
         }
         .print-only { display: none; }
-        
-        /* Canvas Styling */
-        canvas { 
-            border-radius: 8px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px); 
-            background-size: 20px 20px; 
-            background-color: #f8fafc;
-        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
     </style>
 </head>
-<body class="antialiased selection:bg-indigo-500 selection:text-white">
+<body class="selection:bg-blue-600 selection:text-white">
 
-    <!-- Navbar -->
-    <nav class="glass-header text-white p-4 shadow-lg no-print sticky top-0 z-50 border-b border-indigo-500/30">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-500/50">
-                    <i class="fas fa-home text-lg"></i>
+    <!-- NAVBAR -->
+    <nav class="glass-nav fixed w-full top-0 z-50 transition-all duration-300 no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <div class="">
+                        <i class=""></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white tracking-wide">Bikin<span class="font-light text-blue-400">Gazebo</span></h1>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-wide">Merancang<span class="text-indigo-300 font-light italic"> Gazebo</span></h1>
-                    <p class="text-[10px] text-gray-300 tracking-wider uppercase">FOR EDUCATIONAL PURPOSES.</p>
-                </div>
-            </div>
-            <div class="space-x-3">
-                <button onclick="app.resetData()" class="text-xs font-medium bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-full transition-all flex items-center gap-2 backdrop-blur-sm">
-                    <i class="fas fa-sync-alt animate-spin-slow"></i> Reset Harga
+                <button onclick="app.resetData()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-xs font-bold uppercase transition-all flex items-center gap-2">
+                    <i class="fas fa-undo-alt text-blue-400"></i> Reset
                 </button>
             </div>
         </div>
     </nav>
 
-    <div class="container mx-auto p-6 flex flex-col lg:flex-row gap-8">
+    <!-- MAIN CONTAINER -->
+    <div class="container mx-auto px-4 pt-28 pb-12 flex flex-col lg:flex-row gap-8">
         
-        <!-- Sidebar Controls -->
-        <div class="w-full lg:w-1/3 space-y-6 no-print h-fit animate-enter">
-            
-            <!-- Main Control Card -->
-            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl">
-                <!-- Tabs Navigation -->
-                <div class="flex border-b border-gray-200/60 bg-gray-50/50">
-                    <button onclick="ui.switchTab('desain')" id="tab-desain" class="flex-1 py-4 text-center font-bold text-sm text-indigo-700 border-b-2 border-indigo-600 bg-white/50 transition-colors">
-                        <i class="fas fa-drafting-compass mr-1"></i> Desain
-                    </button>
-                    <button onclick="ui.switchTab('harga')" id="tab-harga" class="flex-1 py-4 text-center font-medium text-sm text-gray-500 hover:text-indigo-600 hover:bg-white/50 transition-colors">
-                        <i class="fas fa-tags mr-1"></i> Harga
-                    </button>
-                    <button onclick="ui.switchTab('settings')" id="tab-settings" class="flex-1 py-4 text-center font-medium text-sm text-gray-500 hover:text-indigo-600 hover:bg-white/50 transition-colors">
-                        <i class="fas fa-cog mr-1"></i> Opsi
-                    </button>
+        <!-- SIDEBAR (INPUT) -->
+        <div class="w-full lg:w-1/3 space-y-6 no-print animate-enter">
+            <div class="glass-panel p-4">
+                <!-- Tabs -->
+                <div class="flex p-1 bg-black/40 rounded-lg mb-6 border border-white/5">
+                    <button onclick="ui.switchTab('desain')" id="tab-desain" class="flex-1 py-2.5 rounded-md text-sm font-bold text-white bg-blue-600 shadow-md shadow-blue-900/50">Desain</button>
+                    <button onclick="ui.switchTab('harga')" id="tab-harga" class="flex-1 py-2.5 rounded-md text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-colors">Harga</button>
+                    <button onclick="ui.switchTab('settings')" id="tab-settings" class="flex-1 py-2.5 rounded-md text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-colors">Opsi</button>
                 </div>
 
-                <!-- TAB: DESAIN -->
-                <div id="content-desain" class="p-6 space-y-6">
-                    <div>
-                        <h3 class="font-bold text-indigo-900 text-lg mb-3 flex items-center">
-                            <span class="bg-indigo-100 text-indigo-600 w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">1</span>
-                            Bentuk & Dimensi
-                        </h3>
-                        <div class="relative">
-                            <select id="shape" onchange="app.updatePreview()" class="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none input-glow transition-all cursor-pointer text-gray-700 font-medium">
-                                <option value="persegi">Persegi (Square)</option>
-                                <option value="persegi_panjang">Persegi Panjang</option>
-                                <option value="hexagon">Segi Enam (Hexagon)</option>
-                                <option value="octagon">Segi Delapan (Octagon)</option>
-                                <option value="lingkaran">Lingkaran</option>
-                            </select>
-                            <div class="absolute right-4 top-3.5 text-gray-400 pointer-events-none"><i class=""></i></div>
-                        </div>
+                <!-- CONTENT: DESAIN -->
+                <div id="content-desain" class="space-y-5 px-1">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm">
+                        <label class="text-xs font-bold text-blue-400 uppercase mb-2 block tracking-wider"><i class="fas fa-drafting-compass mr-1"></i> Bentuk Gazebo</label>
+                        <select id="shape" onchange="app.updatePreview()" class="w-full p-3 input-liquid text-sm font-semibold">
+                            <option value="persegi">Persegi</option>
+                            <option value="persegi_panjang">Persegi Panjang</option>
+                            <option value="hexagon">Segi Enam (Hexagon)</option>
+                            <option value="octagon">Segi Delapan (Octagon)</option>
+                            <option value="lingkaran">Lingkaran</option>
+                        </select>
                     </div>
 
                     <div id="input-dimensi-p" class="grid grid-cols-2 gap-4">
-                        <div class="group">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1 group-focus-within:text-indigo-600 transition-colors">Panjang (m)</label>
-                            <input type="number" id="length" value="3.0" step="0.1" class="w-full bg-gray-50 border border-gray-300 px-4 py-2.5 rounded-xl focus:outline-none input-glow transition-all" oninput="app.updatePreview()">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-1 block">Panjang (m)</label>
+                            <input type="number" id="length" value="3.0" step="0.1" class="w-full p-3 input-liquid font-bold" oninput="app.updatePreview()">
                         </div>
-                        <div class="group">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1 group-focus-within:text-indigo-600 transition-colors">Lebar (m)</label>
-                            <input type="number" id="width" value="3.0" step="0.1" class="w-full bg-gray-50 border border-gray-300 px-4 py-2.5 rounded-xl focus:outline-none input-glow transition-all" oninput="app.updatePreview()">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-1 block">Lebar (m)</label>
+                            <input type="number" id="width" value="3.0" step="0.1" class="w-full p-3 input-liquid font-bold" oninput="app.updatePreview()">
                         </div>
                     </div>
-                    <div id="input-dimensi-r" class="hidden group">
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1 group-focus-within:text-indigo-600 transition-colors">Jari-jari / Radius (m)</label>
-                        <input type="number" id="radius" value="2.0" step="0.1" class="w-full bg-gray-50 border border-gray-300 px-4 py-2.5 rounded-xl focus:outline-none input-glow transition-all" oninput="app.updatePreview()">
+                    <div id="input-dimensi-r" class="hidden">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-1 block">Jari-jari (m)</label>
+                        <input type="number" id="radius" value="2.0" step="0.1" class="w-full p-3 input-liquid font-bold" oninput="app.updatePreview()">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="group">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1 group-focus-within:text-indigo-600 transition-colors">Tinggi Tiang (m)</label>
-                            <input type="number" id="height_col" value="2.5" step="0.1" class="w-full bg-gray-50 border border-gray-300 px-4 py-2.5 rounded-xl focus:outline-none input-glow transition-all" oninput="app.updatePreview()">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-1 block">Tinggi Tiang (m)</label>
+                            <input type="number" id="height_col" value="2.5" step="0.1" class="w-full p-3 input-liquid font-bold" oninput="app.updatePreview()">
                         </div>
-                        <div class="group">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1 group-focus-within:text-indigo-600 transition-colors">Overstek (m)</label>
-                            <input type="number" id="overstek" value="0.6" step="0.1" class="w-full bg-gray-50 border border-gray-300 px-4 py-2.5 rounded-xl focus:outline-none input-glow transition-all" oninput="app.updatePreview()">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-1 block">Overstek Atap (m)</label>
+                            <input type="number" id="overstek" value="0.6" step="0.1" class="w-full p-3 input-liquid font-bold" oninput="app.updatePreview()">
                         </div>
                     </div>
 
-                    <div class="border-t border-dashed border-gray-300 pt-5">
-                        <h3 class="font-bold text-indigo-900 text-lg mb-3 flex items-center">
-                            <span class="bg-indigo-100 text-indigo-600 w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">2</span>
-                            Spesifikasi Material
-                        </h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Struktur Utama</label>
-                                <div class="relative">
-                                    <select id="mat_structure" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none input-glow appearance-none" onchange="app.calculateRAB()">
-                                        <option value="kayu_kelapa">Kayu Kelapa (Glagugu)</option>
-                                        <option value="kayu_jati">Kayu Jati</option>
-                                        <option value="kayu_bengkirai">Kayu Bengkirai (Kuat Outdoor)</option>
-                                        <option value="kayu_kamper">Kayu Kamper (Standar)</option>
-                                        <option value="bambu_petung">Bambu Petung (Estetik)</option>
-                                        <option value="baja_wf">Baja WF (Industrial)</option>
-                                        <option value="beton">Beton Bertulang</option>
-                                    </select>
-                                    <i class="fas fa-caret-down absolute right-3 top-3 text-gray-400 pointer-events-none"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Penutup Atap</label>
-                                <div class="relative">
-                                    <select id="mat_roof" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none input-glow appearance-none" onchange="app.calculateRAB()">
-                                        <option value="sirap">Sirap Kayu Ulin</option>
-                                        <option value="genteng_keramik">Genteng Keramik</option>
-                                        <option value="genteng_metal">Genteng Metal Pasir</option>
-                                        <option value="atap_upvc">Atap UPVC (Alderon)</option>
-                                        <option value="atap_bitumen">Atap Bitumen (Onduline)</option>
-                                        <option value="seng_galvalum">Seng Galvalum</option>
-                                        <option value="alang_alang">Ijuk / Alang-alang</option>
-                                    </select>
-                                    <i class="fas fa-caret-down absolute right-3 top-3 text-gray-400 pointer-events-none"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Lantai</label>
-                                <div class="relative">
-                                    <select id="mat_floor" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none input-glow appearance-none" onchange="app.calculateRAB()">
-                                        <option value="keramik">Keramik Standar</option>
-                                        <option value="granit">Granit Tile 60x60</option>
-                                        <option value="batu_alam">Batu Alam Andesit</option>
-                                        <option value="parket_kayu">Parket/Decking Kayu</option>
-                                        <option value="vinyl">Vinyl Flooring</option>
-                                        <option value="plester_aci">Plester Aci Halus</option>
-                                    </select>
-                                    <i class="fas fa-caret-down absolute right-3 top-3 text-gray-400 pointer-events-none"></i>
-                                </div>
-                            </div>
+                    <div class="pt-4 space-y-4 border-t border-white/10">
+                        <div>
+                            <label class="text-[10px] font-bold text-blue-400 uppercase mb-1 block">Material Struktur Utama</label>
+                            <select id="mat_structure" class="w-full p-3 input-liquid text-sm" onchange="app.calculateRAB()">
+                                <optgroup label="Kayu (Standar PU)">
+                                    <option value="kayu_ulin">Kayu Ulin (Kuat/Tahan Air)</option>
+                                    <option value="kayu_bangkirai">Kayu Bangkirai (Klas I)</option>
+                                    <option value="kayu_meranti">Kayu Meranti (Ekonomis)</option>
+                                </optgroup>
+                                <optgroup label="Logam (Modern)">
+                                    <option value="besi_hollow">Besi Hollow Galvanis</option>
+                                    <option value="pipa_galvanis">Pipa Galvanis Medium</option>
+                                    <option value="baja_wf">Baja WF (Konstruksi Berat)</option>
+                                </optgroup>
+                                <optgroup label="Lainnya">
+                                    <option value="beton_k250">Beton Bertulang K-250</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-blue-400 uppercase mb-1 block">Penutup Atap</label>
+                            <select id="mat_roof" class="w-full p-3 input-liquid text-sm" onchange="app.calculateRAB()">
+                                <option value="sirap">Sirap Kayu Ulin</option>
+                                <option value="genteng_keramik">Genteng Keramik Glazur</option>
+                                <option value="genteng_metal">Genteng Metal (Sakura/Multi)</option>
+                                <option value="seng_gelombang">Seng Gelombang BJLS</option>
+                                <option value="atap_onduline">Atap Onduline</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-blue-400 uppercase mb-1 block">Lantai</label>
+                            <select id="mat_floor" class="w-full p-3 input-liquid text-sm" onchange="app.calculateRAB()">
+                                <optgroup label="Ekonomis (Baru)">
+                                    <option value="lantai_papan_meranti">Papan Kayu Meranti (Look Alami)</option>
+                                    <option value="lantai_vinyl">Lantai Vinyl Selgrid</option>
+                                    <option value="lantai_paving">Paving Block (Outdoor)</option>
+                                </optgroup>
+                                <optgroup label="Standar">
+                                    <option value="keramik_40">Keramik 40x40 (Mulia/Asia)</option>
+                                    <option value="keramik_30">Keramik 30x30 (Rustic)</option>
+                                    <option value="plester_aci">Rabat Beton + Aci</option>
+                                </optgroup>
+                                <optgroup label="Premium">
+                                    <option value="granit_60">Granit Tile 60x60 (Indogress)</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB: HARGA -->
-                <div id="content-harga" class="hidden p-6 h-[500px] overflow-y-auto scroller">
-                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200">
-                        <h3 class="font-bold text-lg text-gray-800">Database Harga</h3>
-                        <button onclick="ui.renderPriceTable()" class="text-xs text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full hover:bg-indigo-100 transition-colors"><i class="fas fa-sync-alt mr-1"></i> Refresh</button>
-                    </div>
-                    <div class="text-xs bg-amber-50 border border-amber-200 p-3 rounded-lg mb-4 text-amber-800 flex items-start gap-2">
-                        <i class="fas fa-info-circle mt-0.5"></i>
-                        <p>Harga di bawah ini adalah estimasi. SESUAIKAN HARGA DAERAH KALIAN!</p>
-                        <p>SEMUA BAHAN MERUPAKAN YANG PALING UMUM, KURANG ATAU LEBIH BAHAN YA MAAF.</p>
-                    </div>
-                    <div id="price-list-container" class="space-y-2"></div>
+                <!-- CONTENT: HARGA -->
+                <div id="content-harga" class="hidden h-[500px] overflow-y-auto pr-2">
+                    <div id="price-list-container" class="space-y-3"></div>
                 </div>
 
-                <!-- TAB: SETTINGS -->
-                <div id="content-settings" class="hidden p-6 space-y-6">
-                    <h3 class="font-bold text-gray-800 border-b pb-2">Parameter Analisis Biaya</h3>
-                    
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <label class="block text-sm font-medium text-gray-700">Wastage / Faktor Sisa (%)</label>
-                            <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Rekomen: 5-10%</span>
-                        </div>
-                        <input type="number" id="param_wastage" value="7" class="w-full bg-gray-50 border border-gray-300 p-2.5 rounded-lg focus:outline-none input-glow" onchange="app.calculateRAB()">
+                <!-- CONTENT: SETTINGS -->
+                <div id="content-settings" class="hidden space-y-4 pt-2">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-xs font-bold text-gray-400 uppercase mb-2 block">Wastage / Sisa Bahan (%)</label>
+                        <input type="number" id="param_wastage" value="7" class="w-full p-2 input-liquid text-center font-bold" onchange="app.calculateRAB()">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Profit Kontraktor (%)</label>
-                        <input type="number" id="param_profit" value="10" class="w-full bg-gray-50 border border-gray-300 p-2.5 rounded-lg focus:outline-none input-glow" onchange="app.calculateRAB()">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-xs font-bold text-gray-400 uppercase mb-2 block">Profit Kontraktor (%)</label>
+                        <input type="number" id="param_profit" value="10" class="w-full p-2 input-liquid text-center font-bold" onchange="app.calculateRAB()">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Pajak PPN (%)</label>
-                        <input type="number" id="param_tax" value="11" class="w-full bg-gray-50 border border-gray-300 p-2.5 rounded-lg focus:outline-none input-glow" onchange="app.calculateRAB()">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-xs font-bold text-gray-400 uppercase mb-2 block">Pajak PPN (%)</label>
+                        <input type="number" id="param_tax" value="11" class="w-full p-2 input-liquid text-center font-bold" onchange="app.calculateRAB()">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Output Area -->
-        <div class="w-full lg:w-2/3 space-y-6 animate-enter delay-200">
+        <!-- MAIN OUTPUT -->
+        <div class="w-full lg:w-2/3 space-y-6 animate-enter" style="animation-delay: 0.1s;">
             
-            <!-- Canvas Preview -->
-            <div class="glass-panel p-6 rounded-2xl shadow-xl no-print">
+            <!-- 2D Preview -->
+            <div class="glass-panel p-6 relative no-print">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-xl text-gray-800 font-serif">Visualisasi 2D</h3>
-                    <span class="text-xs font-bold tracking-wider bg-indigo-600 text-white px-3 py-1 rounded-full shadow-md shadow-indigo-200" id="geom-badge">-</span>
+                    <h3 class="font-bold text-xl text-white">Visualisasi 2D</h3>
+                    <span id="geom-badge" class="px-3 py-1 bg-blue-900/50 text-blue-300 text-[10px] font-bold uppercase rounded-full shadow-sm border border-blue-500/30">HEXAGON</span>
                 </div>
-                <div class="flex justify-center bg-white rounded-xl border border-gray-200 p-4 shadow-inner relative overflow-hidden">
-                    <!-- Grid Background created by CSS in <style> -->
-                    <canvas id="gazeboCanvas" width="600" height="400" class="w-full h-auto max-w-[600px] z-10 relative"></canvas>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 bg-black/40 rounded-xl flex justify-center p-4 border border-white/10 shadow-inner">
+                        <canvas id="gazeboCanvas" width="500" height="350" class="w-full h-auto max-w-[500px]"></canvas>
+                    </div>
+                    <div class="md:w-40 flex flex-col justify-center gap-3" id="geometry-info">
+                        <!-- JS Generated -->
+                    </div>
                 </div>
-                <div id="geometry-info" class="grid grid-cols-3 gap-4 mt-6"></div>
             </div>
 
-            <!-- RAB & AHSP Output -->
-            <div class="glass-panel p-8 rounded-2xl shadow-2xl relative" id="print-area">
+            <!-- Report Panel -->
+            <div class="glass-panel p-8 relative" id="print-area">
                 
-                <!-- Decoration Elements -->
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-bl-full pointer-events-none no-print"></div>
-
                 <!-- Print Header -->
-                <div class="print-only mb-8 border-b-2 border-gray-800 pb-4">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h1 class="text-3xl font-bold uppercase tracking-wide font-serif">Rencana Anggaran Biaya</h1>
-                            <p class="font-semibold text-lg mt-1 text-gray-600">Pekerjaan Pembangunan Gazebo</p>
-                        </div>
-                        <div class="text-right text-sm text-gray-500">
-                            <p>Tanggal Cetak: <span id="print-date" class="font-mono text-black font-bold"></span></p>
-                            <p>Metode: AHSP SNI (Kustomisasi)</p>
-                        </div>
-                    </div>
+                <div class="print-only border-b-2 border-slate-800 mb-6 pb-4">
+                    <h1 class="text-3xl font-bold text-slate-800">Rencana Anggaran Biaya</h1>
+                    <p class="text-slate-600">Gazebo Project Estimation (Standar PU)</p>
+                    <p class="text-xs mt-2 text-slate-400" id="print-date"></p>
                 </div>
 
-                <!-- Action Buttons & Summary Header -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-8 no-print gap-4">
+                <!-- Screen Header -->
+                <div class="flex flex-col md:flex-row justify-between items-end mb-8 no-print gap-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800 font-serif">Estimasi Biaya</h2>
-                        <p class="text-sm text-gray-500">Perhitungan real-time berdasarkan input desain.</p>
+                        <h2 class="text-3xl font-bold text-white drop-shadow-sm">Estimasi Biaya</h2>
+                        <p class="text-gray-400 text-sm">Kalkulasi Otomatis (Metode SNI - Std. PU)</p>
                     </div>
-                    <button onclick="window.print()" class="glow-hover bg-gradient-to-r from-gray-800 to-gray-900 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 font-medium tracking-wide">
-                        <i class="fas fa-print"></i> Cetak Laporan (PDF)
+                    <button onclick="window.print()" class="btn-ocean px-6 py-3 rounded-xl font-bold text-sm tracking-wide flex items-center gap-2">
+                        <i class="fas fa-print"></i> CETAK PDF
                     </button>
                 </div>
 
-                <!-- Summary Cards (Visible on both) -->
+                <!-- Summary Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
-                        <div class="absolute right-0 top-0 w-16 h-16 bg-blue-500/5 rounded-bl-full"></div>
-                        <p class="text-xs text-blue-600 font-bold uppercase tracking-widest mb-1">Biaya Konstruksi</p>
-                        <p class="text-2xl font-extrabold text-blue-900 font-serif tracking-tight" id="val-physical">Rp 0</p>
-                        <p class="text-[10px] text-blue-400 mt-2 font-medium">Material + Upah + Alat</p>
+                    <div class="bg-white/5 p-5 rounded-2xl border border-white/10 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Konstruksi</p>
+                        <p class="text-2xl font-bold text-blue-400" id="val-physical">Rp 0</p>
                     </div>
-                    <div class="bg-gradient-to-br from-emerald-50 to-white p-5 rounded-2xl border border-emerald-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
-                        <div class="absolute right-0 top-0 w-16 h-16 bg-emerald-500/5 rounded-bl-full"></div>
-                        <p class="text-xs text-emerald-600 font-bold uppercase tracking-widest mb-1">Grand Total</p>
-                        <p class="text-2xl font-extrabold text-emerald-900 font-serif tracking-tight" id="val-total">Rp 0</p>
-                        <p class="text-[10px] text-emerald-500 mt-2 font-medium">Termasuk PPN & Profit</p>
+                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-5 rounded-2xl shadow-lg text-white border border-blue-500/50">
+                        <p class="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">Total Biaya</p>
+                        <p class="text-2xl font-bold" id="val-total">Rp 0</p>
                     </div>
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-all flex flex-col justify-center text-center">
-                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">Harga Satuan</p>
-                        <p class="text-xl font-bold text-gray-700" id="val-perm2">Rp 0</p>
-                        <p class="text-[10px] text-gray-400">per m² luas lantai</p>
+                    <div class="bg-white/5 p-5 rounded-2xl border border-white/10 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Per Meter</p>
+                        <p class="text-xl font-bold text-white" id="val-perm2">Rp 0</p>
                     </div>
                 </div>
 
-                <!-- REPORT VIEW TOGGLER -->
-                <div class="flex space-x-1 mb-6 border-b border-gray-200 report-tabs no-print">
-                    <button onclick="ui.switchReport('rab')" id="btn-view-rab" class="px-6 py-3 font-bold text-sm border-b-2 focus:outline-none transition-all border-indigo-600 text-indigo-700 bg-indigo-50/50 rounded-t-lg">
-                        <i class="fas fa-list-ol mr-2"></i>Tabel RAB
-                    </button>
-                    <button onclick="ui.switchReport('ahsp')" id="btn-view-ahsp" class="px-6 py-3 font-bold text-sm border-b-2 focus:outline-none transition-all border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-t-lg">
-                        <i class="fas fa-calculator mr-2"></i>Rincian AHSP
-                    </button>
+                <!-- Toggle -->
+                <div class="flex gap-2 mb-6 no-print">
+                    <button onclick="ui.switchReport('rab')" id="btn-view-rab" class="px-5 py-2.5 rounded-lg text-sm font-bold bg-white text-blue-900 shadow-sm border border-slate-100">RAB Detail</button>
+                    <button onclick="ui.switchReport('ahsp')" id="btn-view-ahsp" class="px-5 py-2.5 rounded-lg text-sm font-bold bg-transparent border border-white/20 text-gray-400 hover:bg-white/5 transition-colors">Analisis (AHSP)</button>
                 </div>
 
-                <!-- VIEW 1: RAB TABLE (DETAILED) -->
-                <div id="view-rab" class="block animate-enter">
-                    <h3 class="font-bold text-gray-800 mb-4 border-l-4 border-indigo-600 pl-3 text-lg font-serif">I. Rekapitulasi Rencana Anggaran Biaya</h3>
-                    <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                        <table class="w-full text-sm border-collapse">
-                            <thead class="bg-gray-900 text-white">
-                                <tr>
-                                    <th class="px-4 py-3 w-12 text-center font-medium tracking-wide">No</th>
-                                    <th class="px-4 py-3 text-left font-medium tracking-wide">Uraian Pekerjaan & Analisa Bahan</th>
-                                    <th class="px-4 py-3 w-20 text-center font-medium">Vol</th>
-                                    <th class="px-4 py-3 w-16 text-center font-medium">Sat</th>
-                                    <th class="px-4 py-3 w-36 text-right font-medium">Harga Sat.</th>
-                                    <th class="px-4 py-3 w-36 text-right font-medium">Jumlah Harga</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rab-table-body" class="bg-white divide-y divide-gray-100">
-                                <!-- Generated JS -->
-                            </tbody>
-                            <tfoot class="bg-gray-50 font-bold text-gray-800">
-                                <tr>
-                                    <td colspan="5" class="px-4 py-2 text-right border-t border-gray-200 text-xs uppercase tracking-wider text-gray-500">Subtotal (Fisik)</td>
-                                    <td class="px-4 py-2 text-right border-t border-gray-200" id="footer-fisik">0</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="px-4 py-2 text-right text-xs uppercase tracking-wider text-gray-500 font-normal">Jasa Kontraktor (<span id="disp-profit"></span>%)</td>
-                                    <td class="px-4 py-2 text-right font-normal" id="footer-profit">0</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="px-4 py-2 text-right text-xs uppercase tracking-wider text-gray-500 font-normal">PPN (<span id="disp-tax"></span>%)</td>
-                                    <td class="px-4 py-2 text-right font-normal" id="footer-tax">0</td>
-                                </tr>
-                                <tr class="bg-gray-800 text-white text-base shadow-inner">
-                                    <td colspan="5" class="px-4 py-4 text-right">TOTAL BIAYA</td>
-                                    <td class="px-4 py-4 text-right font-bold text-lg" id="footer-total">0</td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                <!-- REPORT TABLES CONTAINER -->
+                <div class="card-detail min-h-[300px]">
+                    
+                    <!-- View RAB -->
+                    <div id="view-rab" class="animate-enter">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-gray-300">
+                                <thead class="bg-black/20 text-gray-400 border-b border-white/10">
+                                    <tr>
+                                        <th class="px-4 py-3 text-center w-10">No</th>
+                                        <th class="px-4 py-3 text-left">Pekerjaan & Rincian Perhitungan</th>
+                                        <th class="px-4 py-3 text-center w-16">Vol</th>
+                                        <th class="px-4 py-3 text-center w-12">Sat</th>
+                                        <th class="px-4 py-3 text-right">Harga Sat</th>
+                                        <th class="px-4 py-3 text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rab-table-body" class="divide-y divide-white/5"></tbody>
+                                <tfoot class="bg-black/30 font-bold text-gray-200 border-t border-white/10">
+                                    <tr><td colspan="5" class="px-4 py-2 text-right text-xs uppercase text-gray-500">Subtotal Fisik</td><td class="px-4 py-2 text-right text-white" id="footer-fisik">0</td></tr>
+                                    <tr><td colspan="5" class="px-4 py-2 text-right text-xs uppercase text-gray-500">Jasa Kontraktor (<span id="disp-profit">10</span>%)</td><td class="px-4 py-2 text-right text-green-400" id="footer-profit">0</td></tr>
+                                    <tr><td colspan="5" class="px-4 py-2 text-right text-xs uppercase text-gray-500">PPN (<span id="disp-tax">11</span>%)</td><td class="px-4 py-2 text-right text-red-400" id="footer-tax">0</td></tr>
+                                    <tr class="bg-blue-900/40 text-white text-base"><td colspan="5" class="px-4 py-4 text-right">TOTAL ESTIMASI</td><td class="px-4 py-4 text-right text-blue-300 text-lg" id="footer-total">0</td></tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-                <!-- VIEW 2: AHSP DETAIL -->
-                <div id="view-ahsp" class="hidden animate-enter">
-                    <h3 class="font-bold text-gray-800 mb-3 border-l-4 border-indigo-600 pl-3 text-lg font-serif">II. Analisis Harga Satuan Pekerjaan (AHSP)</h3>
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 flex items-start gap-3">
-                        <i class="fas fa-lightbulb text-yellow-600 mt-1"></i>
-                        <p class="text-xs text-yellow-800">Analisis ini membedah harga satuan menjadi komponen: <strong>Bahan</strong> (termasuk faktor waste), <strong>Upah Tenaga</strong> (berdasarkan produktivitas), dan <strong>Alat Bantu</strong>.</p>
-                    </div>
-                    <div id="ahsp-container" class="space-y-8">
-                        <!-- Generated JS -->
+                    <!-- View AHSP -->
+                    <div id="view-ahsp" class="hidden p-6 animate-enter">
+                        <div id="ahsp-container" class="space-y-6"></div>
                     </div>
                 </div>
 
@@ -415,55 +389,117 @@
     </div>
 
 <script>
-// --- DATA AWAL ---
+// --- CORE LOGIC ---
 const defaultPrices = {
-    // Material Utama (Struktur)
-    'kayu_kelapa': { name: 'Kayu Kelapa (Glagugu) Super', unit: 'm3', price: 3500000, source: 'Depo Kayu Lokal' },
-    'kayu_jati': { name: 'Kayu Jati Klas II', unit: 'm3', price: 15000000, source: 'Supplier Jati' },
-    'kayu_bengkirai': { name: 'Kayu Bengkirai (Kalimantan)', unit: 'm3', price: 12000000, source: 'Depo Kayu' },
-    'kayu_kamper': { name: 'Kayu Kamper (Samarinda)', unit: 'm3', price: 9000000, source: 'Depo Kayu' },
-    'bambu_petung': { name: 'Bambu Petung (Struktural)', unit: 'm3', price: 2500000, source: 'Kebun Bambu' }, 
-    'baja_wf': { name: 'Baja WF 150 (Konversi Vol)', unit: 'kg', price: 22000, source: 'Toko Besi' }, 
-    'beton_k250': { name: 'Beton K-250 (Site Mix)', unit: 'm3', price: 950000, source: 'Analisa Campuran' },
+    // Material Struktur (Sesuai Dokumen PU)
+    'kayu_ulin': { name: 'Kayu Ulin (Balok)', unit: 'm3', price: 6760000, source: 'Std PU' },
+    'kayu_bangkirai': { name: 'Kayu Bangkirai (Balok)', unit: 'm3', price: 6240000, source: 'Std PU' },
+    'kayu_meranti': { name: 'Kayu Meranti (Balok)', unit: 'm3', price: 2756000, source: 'Std PU' },
+    'papan_ulin': { name: 'Papan Ulin', unit: 'm3', price: 6240000, source: 'Std PU' },
+    'besi_hollow': { name: 'Besi Hollow 40x60 t.1mm', unit: 'btg', price: 147200, source: 'Std PU' },
+    'pipa_galvanis': { name: 'Pipa Galvanis 3"', unit: 'btg', price: 1171500, source: 'Std PU' },
+    'baja_wf': { name: 'Baja WF Profil', unit: 'kg', price: 16026, source: 'Std PU' },
+    'beton_k250': { name: 'Beton Ready Mix K-250', unit: 'm3', price: 1558254, source: 'Std PU' },
     
-    // Material Atap
-    'sirap': { name: 'Sirap Kayu Ulin', unit: 'm2', price: 165000, source: 'Supplier Atap' },
-    'genteng': { name: 'Genteng Keramik Glazur', unit: 'bh', price: 4800, source: 'Toko Bangunan' },
-    'genteng_metal': { name: 'Genteng Metal Pasir', unit: 'm2', price: 85000, source: 'Toko Bangunan' },
-    'atap_upvc': { name: 'Atap UPVC (Alderon/Setara)', unit: 'm2', price: 180000, source: 'Distributor Atap' },
-    'atap_bitumen': { name: 'Atap Bitumen Gelombang', unit: 'm2', price: 140000, source: 'Toko Bangunan' },
-    'seng': { name: 'Seng Galvalum 0.35mm', unit: 'm2', price: 55000, source: 'Toko Bangunan' },
-    'alang': { name: 'Atap Alang-alang (Ikat)', unit: 'm2', price: 125000, source: 'Pengrajin Bali' },
+    // Atap
+    'sirap': { name: 'Atap Sirap Ulin', unit: 'm2', price: 64400, source: 'Est (80bh/m2 x 805)' }, // 805/bh x 80
+    'genteng_keramik': { name: 'Genteng Keramik Glazur', unit: 'bh', price: 16480, source: 'Std PU (Kanmuri)' },
+    'genteng_metal': { name: 'Genteng Metal (Sakura Roof)', unit: 'lbr', price: 116523, source: 'Std PU' },
+    'seng_gelombang': { name: 'Seng Gelombang BJLS 30', unit: 'lbr', price: 77682, source: 'Std PU' },
+    'atap_onduline': { name: 'Atap Onduline', unit: 'lbr', price: 197248, source: 'Std PU' },
     
-    // Material Lantai
-    'keramik': { name: 'Keramik Lantai 40x40', unit: 'm2', price: 70000, source: 'Toko Keramik' },
-    'granit': { name: 'Granit Tile 60x60 (Cream)', unit: 'm2', price: 185000, source: 'Toko Granit' },
-    'batu_alam': { name: 'Batu Alam Andesit Bintik', unit: 'm2', price: 250000, source: 'Pangkalan Batu' },
-    'parket': { name: 'Parket Kayu Bengkirai', unit: 'm2', price: 380000, source: 'Supplier Lantai' },
-    'vinyl': { name: 'Vinyl Flooring Sticker', unit: 'm2', price: 120000, source: 'Toko Interior' },
-    'cat_kayu': { name: 'Cat Kayu / Politur Eksterior', unit: 'lt', price: 90000, source: 'Toko Cat' },
+    // Lantai (Disesuaikan dengan PDF)
+    'granit_60': { name: 'Granit Tile 60x60', unit: 'm2', price: 345565, source: 'Std PU (Indogress)' },
+    'keramik_40': { name: 'Keramik 40x40', unit: 'm2', price: 60500, source: 'Std PU (Mulia)' },
+    'keramik_30': { name: 'Keramik 30x30 Rustic', unit: 'm2', price: 63250, source: 'Std PU (Asia)' },
+    'plester_aci': { name: 'Rabat Beton + Acian', unit: 'm2', price: 171700, source: 'Std PU' },
+    
+    // -- LANTAI MURAH (BARU) --
+    'lantai_papan_meranti': { name: 'Papan Meranti (2.5cm)', unit: 'm2', price: 72800, source: 'Est (2.5cm x 2.9jt/m3)' },
+    'lantai_vinyl': { name: 'Lantai Kayu Vinyl Selgrid', unit: 'm2', price: 231000, source: 'Std PU (X.3.10.4.1.54)' },
+    'lantai_paving': { name: 'Paving Block Abu (6cm)', unit: 'm2', price: 121805, source: 'Std PU (48bh/m2 x 2.537)' },
 
-    // Material Pendukung
-    'paku': { name: 'Paku Berbagai Ukuran', unit: 'kg', price: 20000, source: 'Toko Bangunan' },
-    'bekisting': { name: 'Papan Bekisting (Sewa/Pakai)', unit: 'm2', price: 45000, source: 'Toko Kayu' },
-    'minyak': { name: 'Minyak Bekisting', unit: 'lt', price: 15000, source: 'Toko Bangunan' },
-    'baut': { name: 'Baut/Mur/Angkur', unit: 'bh', price: 5000, source: 'Toko Baut' },
-    'nok': { name: 'Nok/Bubungan Atap', unit: 'm', price: 85000, source: 'Toko Bangunan' },
-    'semen': { name: 'Semen Portland (Nat/Perekat)', unit: 'zak', price: 65000, source: 'Toko Bangunan' },
-    'pasir': { name: 'Pasir Urug/Pasang', unit: 'm3', price: 250000, source: 'Pangkalan Pasir' },
-    'amplas': { name: 'Kertas Amplas', unit: 'lbr', price: 5000, source: 'Toko Bangunan' },
-    'kuas': { name: 'Kuas Cat', unit: 'bh', price: 15000, source: 'Toko Bangunan' },
+    // Pendukung
+    'paku': { name: 'Paku Biasa', unit: 'kg', price: 27122, source: 'Std PU' },
+    'baut': { name: 'Baut/Mur', unit: 'psg', price: 3300, source: 'Std PU' },
+    'semen': { name: 'Semen PC (50kg)', unit: 'zak', price: 68480, source: 'Std PU (Gresik)' },
+    'pasir': { name: 'Pasir Beton', unit: 'm3', price: 428800, source: 'Std PU' },
+    'cat_kayu': { name: 'Cat Kayu Synthetic', unit: 'kg', price: 89200, source: 'Std PU' },
+    'cat_besi': { name: 'Cat Besi/Anti Karat', unit: 'kg', price: 66936, source: 'Std PU' },
+    'las': { name: 'Kawat Las', unit: 'dos', price: 194040, source: 'Std PU' },
+    'bekisting': { name: 'Papan Bekisting (Meranti)', unit: 'm3', price: 2251200, source: 'Std PU' }, // Menggunakan harga papan meranti
 
-    // Upah
-    'tukang': { name: 'Tukang Kayu/Batu', unit: 'OH', price: 160000, source: 'Standar Upah' },
-    'pekerja': { name: 'Pekerja / Laden', unit: 'OH', price: 120000, source: 'Standar Upah' },
-    'mandor': { name: 'Mandor', unit: 'OH', price: 190000, source: 'Standar Upah' }
+    // Upah (Std PU)
+    'tukang': { name: 'Tukang', unit: 'OH', price: 129800, source: 'Std PU' },
+    'pekerja': { name: 'Pekerja Terampil', unit: 'OH', price: 121600, source: 'Std PU' },
+    'mandor': { name: 'Mandor', unit: 'OH', price: 137800, source: 'Std PU' }
 };
 
 const savedPrices = JSON.parse(localStorage.getItem('gazebo_prices')) || {};
 let prices = { ...defaultPrices, ...savedPrices };
 
-// --- CONTROLLER ---
+// UI Object defined FIRST to fix ReferenceError
+const ui = {
+    fmt: (n) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n),
+    switchTab: (t) => {
+        ['desain', 'harga', 'settings'].forEach(x => {
+            document.getElementById(`content-${x}`).classList.add('hidden');
+            const btn = document.getElementById(`tab-${x}`);
+            btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-900/50');
+            btn.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+        });
+        document.getElementById(`content-${t}`).classList.remove('hidden');
+        const active = document.getElementById(`tab-${t}`);
+        active.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+        active.classList.add('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-900/50');
+    },
+    switchReport: (view) => {
+        const rabBtn = document.getElementById('btn-view-rab');
+        const ahspBtn = document.getElementById('btn-view-ahsp');
+        
+        if(view === 'rab') {
+            document.getElementById('view-rab').classList.remove('hidden');
+            document.getElementById('view-ahsp').classList.add('hidden');
+            
+            rabBtn.classList.remove('bg-transparent', 'border-white/20', 'text-gray-400', 'hover:bg-white/5');
+            rabBtn.classList.add('bg-white', 'text-blue-900', 'shadow-sm');
+            
+            ahspBtn.classList.remove('bg-white', 'text-blue-900', 'shadow-sm');
+            ahspBtn.classList.add('bg-transparent', 'border-white/20', 'text-gray-400', 'hover:bg-white/5');
+        } else {
+            document.getElementById('view-rab').classList.add('hidden');
+            document.getElementById('view-ahsp').classList.remove('hidden');
+            
+            ahspBtn.classList.remove('bg-transparent', 'border-white/20', 'text-gray-400', 'hover:bg-white/5');
+            ahspBtn.classList.add('bg-white', 'text-blue-900', 'shadow-sm');
+            
+            rabBtn.classList.remove('bg-white', 'text-blue-900', 'shadow-sm');
+            rabBtn.classList.add('bg-transparent', 'border-white/20', 'text-gray-400', 'hover:bg-white/5');
+        }
+    },
+    renderPriceTable: () => {
+        const c = document.getElementById('price-list-container');
+        let h = '';
+        for(let k in prices) {
+            h += `<div class="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group shadow-sm">
+                <div class="w-1/2">
+                    <div class="font-bold text-gray-200 text-sm group-hover:text-blue-400 transition-colors">${prices[k].name}</div>
+                    <div class="text-[10px] text-gray-500 flex items-center mt-1">
+                        <span class="mr-1">Src:</span>
+                        <input type="text" value="${prices[k].source}" class="bg-transparent border-b border-gray-600 w-24 text-gray-400 focus:outline-none focus:border-blue-400 text-[10px]" onchange="app.updateSource('${k}',this.value)">
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold bg-black/20 px-2 py-1 rounded border border-white/5 text-gray-400">${prices[k].unit}</span>
+                    <input type="number" value="${prices[k].price}" class="w-28 px-2 py-1 rounded-lg text-right font-mono font-bold text-white bg-white/5 border border-white/10 focus:bg-black/40 focus:border-blue-400 focus:outline-none transition-all text-sm" onchange="app.updatePrice('${k}',this.value)">
+                </div>
+            </div>`;
+        }
+        c.innerHTML = h;
+    }
+};
+
+// App Object defined SECOND
 const app = {
     currentGeom: {},
 
@@ -472,10 +508,19 @@ const app = {
         app.updatePreview();
         const d = new Date();
         document.getElementById('print-date').innerText = d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if(window.scrollY > 20) {
+                nav.classList.add('bg-black/40', 'backdrop-blur-xl', 'shadow-sm');
+            } else {
+                nav.classList.remove('bg-black/40', 'backdrop-blur-xl', 'shadow-sm');
+            }
+        });
     },
 
     resetData: () => {
-        if(confirm("Kembalikan harga ke default?")) {
+        if(confirm("Reset harga ke standar Dinas PU?")) {
             localStorage.removeItem('gazebo_prices');
             prices = JSON.parse(JSON.stringify(defaultPrices));
             ui.renderPriceTable();
@@ -488,6 +533,13 @@ const app = {
             prices[key].price = parseFloat(val);
             localStorage.setItem('gazebo_prices', JSON.stringify(prices));
             app.calculateRAB();
+        }
+    },
+    
+    updateSource: (key, val) => {
+        if(prices[key]) {
+            prices[key].source = val;
+            localStorage.setItem('gazebo_prices', JSON.stringify(prices));
         }
     },
 
@@ -507,28 +559,34 @@ const app = {
             if(shape === 'persegi') document.getElementById('width').value = l;
             area = l * w;
             perimeter = 2 * (l + w);
-            const flatRoof = (l + 2*overstek) * (w + 2*overstek);
-            roofArea = flatRoof / 0.819; // Cos 35 deg
+            roofArea = (l + 2*overstek) * (w + 2*overstek) / 0.819; 
         } else {
             inputsP.classList.add('hidden'); inputsR.classList.remove('hidden');
             const r = parseFloat(document.getElementById('radius').value);
-            let n = shape === 'hexagon' ? 6 : (shape === 'octagon' ? 8 : 100);
             
             if (shape === 'hexagon') { area = 2.598 * r * r; perimeter = 6 * r; }
-            else if (shape === 'octagon') { area = 2.828 * r * r; perimeter = 6.12 * r; } // approx
+            else if (shape === 'octagon') { area = 2.828 * r * r; perimeter = 6.12 * r; } 
             else { area = Math.PI * r * r; perimeter = 2 * Math.PI * r; }
             
             const r_roof = r + overstek;
-            const s_roof = r_roof / 0.819; // slant height
-            roofArea = Math.PI * r_roof * s_roof; // Cone approx
+            roofArea = Math.PI * r_roof * (r_roof / 0.819);
         }
 
         app.currentGeom = { shape, area, perimeter, roofArea, heightCol };
         document.getElementById('geom-badge').innerText = shape.toUpperCase().replace('_', ' ');
         document.getElementById('geometry-info').innerHTML = `
-            <div class="bg-gray-50 p-2 rounded border border-gray-200 text-center"><p class="text-[10px] text-gray-500 uppercase tracking-wide">Luas Lantai</p><p class="font-bold text-indigo-700 text-lg">${area.toFixed(2)} m²</p></div>
-            <div class="bg-gray-50 p-2 rounded border border-gray-200 text-center"><p class="text-[10px] text-gray-500 uppercase tracking-wide">Luas Atap</p><p class="font-bold text-indigo-700 text-lg">${roofArea.toFixed(2)} m²</p></div>
-            <div class="bg-gray-50 p-2 rounded border border-gray-200 text-center"><p class="text-[10px] text-gray-500 uppercase tracking-wide">Keliling</p><p class="font-bold text-indigo-700 text-lg">${perimeter.toFixed(2)} m'</p></div>
+            <div class="bg-white/10 p-2 rounded-xl text-center border border-white/10 backdrop-blur-sm shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest">Luas Lantai</p>
+                <p class="font-bold text-white">${area.toFixed(2)} m²</p>
+            </div>
+            <div class="bg-white/10 p-2 rounded-xl text-center border border-white/10 backdrop-blur-sm shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest">Luas Atap</p>
+                <p class="font-bold text-white">${roofArea.toFixed(2)} m²</p>
+            </div>
+            <div class="bg-white/10 p-2 rounded-xl text-center border border-white/10 backdrop-blur-sm shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest">Keliling</p>
+                <p class="font-bold text-white">${perimeter.toFixed(2)} m'</p>
+            </div>
         `;
         return app.currentGeom;
     },
@@ -537,14 +595,8 @@ const app = {
         const canvas = document.getElementById('gazeboCanvas');
         const ctx = canvas.getContext('2d');
         const w = canvas.width, h = canvas.height;
-        const cx = w/2, cy = h/2, scale = 40; // Increased scale slightly
+        const cx = w/2, cy = h/2, scale = 40; 
         ctx.clearRect(0,0,w,h);
-
-        // Draw shadow for depth
-        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 5;
-        ctx.shadowOffsetY = 5;
 
         const poly = (n, r, fill, stroke) => {
             ctx.beginPath();
@@ -553,9 +605,6 @@ const app = {
                 ctx.lineTo(cx + r*scale*Math.cos(a), cy + r*scale*Math.sin(a));
             }
             ctx.fillStyle = fill; ctx.fill();
-            ctx.shadowBlur = 0; // Remove shadow for stroke
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
             ctx.lineWidth = 2;
             ctx.strokeStyle = stroke; ctx.stroke();
         };
@@ -565,56 +614,22 @@ const app = {
             const wd = parseFloat(document.getElementById('width').value);
             const os = parseFloat(document.getElementById('overstek').value);
             
-            // Roof
-            ctx.fillStyle='#94a3b8'; 
+            ctx.fillStyle='rgba(59, 130, 246, 0.2)'; 
             ctx.fillRect(cx-((wd/2+os)*scale), cy-((l/2+os)*scale), (wd+2*os)*scale, (l+2*os)*scale);
-            
-            // Reset shadow for floor
-            ctx.shadowBlur = 0;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-
-            // Stroke Roof
-            ctx.strokeStyle='#475569'; 
-            ctx.lineWidth = 2;
+            ctx.strokeStyle='rgba(96, 165, 250, 0.8)';
             ctx.strokeRect(cx-((wd/2+os)*scale), cy-((l/2+os)*scale), (wd+2*os)*scale, (l+2*os)*scale);
             
-            // Floor
-            ctx.fillStyle='#e0f2fe'; 
+            ctx.fillStyle='rgba(255, 255, 255, 0.1)'; 
             ctx.fillRect(cx-(wd/2*scale), cy-(l/2*scale), wd*scale, l*scale);
-            ctx.strokeStyle='#0284c7'; 
+            ctx.strokeStyle='rgba(255, 255, 255, 0.3)'; 
             ctx.strokeRect(cx-(wd/2*scale), cy-(l/2*scale), wd*scale, l*scale);
-            
-            // Columns
-            ctx.fillStyle = '#1e3a8a';
-            const colOffX = (wd/2) - 0.15;
-            const colOffY = (l/2) - 0.15;
-            [[1,1], [1,-1], [-1,1], [-1,-1]].forEach(dir => {
-                ctx.beginPath();
-                ctx.arc(cx + (dir[0]*colOffX*scale), cy + (dir[1]*colOffY*scale), 4, 0, 2*Math.PI);
-                ctx.fill();
-            });
-
         } else {
             const r = parseFloat(document.getElementById('radius').value);
             const os = parseFloat(document.getElementById('overstek').value);
             const n = geom.shape==='hexagon'?6:(geom.shape==='octagon'?8:50);
             
-            poly(n, r+os, '#94a3b8', '#475569'); // Roof
-            poly(n, r, '#e0f2fe', '#0284c7'); // Floor
-            
-            // Columns
-            if (n < 20) {
-                ctx.fillStyle = '#1e3a8a';
-                for (let i = 0; i < n; i++) {
-                    const angle = (i * 2 * Math.PI / n) - (Math.PI/2);
-                    const x = cx + ((r-0.15) * scale * Math.cos(angle)); 
-                    const y = cy + ((r-0.15) * scale * Math.sin(angle));
-                    ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, 2*Math.PI);
-                    ctx.fill();
-                }
-            }
+            poly(n, r+os, 'rgba(59, 130, 246, 0.2)', 'rgba(96, 165, 250, 0.8)');
+            poly(n, r, 'rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)');
         }
     },
     
@@ -637,7 +652,7 @@ const app = {
         const items = [];
 
         const addItem = (title, vol, unit, mainMatKey, mainMatCoef, laborCoef, auxList) => {
-            const matPrice = prices[mainMatKey] || { price: 0, name: mainMatKey + ' (Unknown)', unit: '-' };
+            const matPrice = prices[mainMatKey] || { price: 0, name: mainMatKey, unit: '-' };
             const tukang = prices['tukang'];
             const pekerja = prices['pekerja'];
             const mandor = prices['mandor'];
@@ -648,7 +663,7 @@ const app = {
 
             let auxTotal = 0;
             const auxDetails = auxList.map(aux => {
-                const p = prices[aux.key] || { price: 0, name: aux.key + ' (N/A)', unit: '-' };
+                const p = prices[aux.key] || { price: 0, name: aux.key, unit: '-' };
                 const cost = p.price * aux.coef;
                 auxTotal += cost;
                 return { name: p.name, unit: p.unit, price: p.price, coef: aux.coef, total: cost };
@@ -660,7 +675,7 @@ const app = {
                 { role: 'Mandor', coef: laborCoef * 0.05, price: mandor.price, total: laborCoef * 0.05 * mandor.price }
             ];
             const laborTotal = laborDetails.reduce((s, x) => s + x.total, 0);
-            const toolCost = laborTotal * 0.03;
+            const toolCost = laborTotal * 0.05; // Alat 5% dari upah
             const unitPrice = mainTotal + auxTotal + laborTotal + toolCost;
             
             items.push({
@@ -676,34 +691,72 @@ const app = {
         };
 
         const numCols = g.shape === 'hexagon' ? 6 : (g.shape === 'octagon' ? 8 : 4);
-        const volFound = numCols * 0.1; 
-        addItem("Pondasi Beton Bertulang (Umpak)", volFound, "m3", "beton_k250", 1.05, 3.0, [
-            { key: 'bekisting', coef: 4.0 }, { key: 'paku', coef: 0.5 }, { key: 'minyak', coef: 0.2 }
+        
+        // 1. PONDASI
+        const volPondasi = numCols * 0.15; 
+        addItem("Pondasi Beton Bertulang", volPondasi, "m3", "beton_k250", 1.02, 3.0, [
+            { key: 'bekisting', coef: 20.0 }, // Konversi m3 papan ke kebutuhan bekisting
+            { key: 'paku', coef: 0.4 }
         ]);
-
-        const volStruct = g.area * 0.07; 
-        addItem("Rangka Struktur Utama (Tiang & Balok)", volStruct, "m3", matStruct, 1.1, 6.0, [
-            { key: 'baut', coef: 12 }, { key: 'paku', coef: 1.5 }, { key: 'amplas', coef: 5 }
-        ]);
-
-        let roofCoef = 1.1, roofKey = matRoof;
-        if(matRoof === 'genteng') {
-            prices['genteng_m2'] = { ...prices['genteng'], price: prices['genteng'].price * 25, unit: 'm2 set' };
-            roofKey = 'genteng_m2';
-            roofCoef = 1.05;
+        
+        // 2. STRUKTUR UTAMA
+        const volStructM3 = g.area * 0.08; 
+        
+        if (matStruct.includes('besi') || matStruct.includes('baja')) {
+            const weightCoef = matStruct === 'baja_wf' ? 35 : 12;
+            const totalWeight = g.area * weightCoef;
+            const matKey = matStruct;
+            
+            addItem(`Rangka Struktur (${prices[matKey].name})`, totalWeight, "kg", matKey, 1.05, 0.06, [
+                { key: 'las', coef: 0.05 },
+                { key: 'cat_besi', coef: 0.02 }
+            ]);
+        } else if (matStruct.includes('pipa')) {
+             const totalBtg = Math.ceil(g.area * 2);
+             addItem(`Rangka Pipa Galvanis`, totalBtg, "btg", matStruct, 1.1, 0.8, [
+                 { key: 'las', coef: 0.2 },
+                 { key: 'cat_besi', coef: 0.1 }
+             ]);
+        } else {
+            // KAYU
+            addItem(`Rangka Kayu (${prices[matStruct].name})`, volStructM3, "m3", matStruct, 1.1, 15.0, [
+                { key: 'baut', coef: 15 }, 
+                { key: 'paku', coef: 3.0 },
+                { key: 'cat_kayu', coef: 2.5 }
+            ]);
         }
-        addItem("Penutup Atap", g.roofArea, "m2", roofKey, roofCoef, 0.5, [
-            { key: 'nok', coef: 0.3 }, { key: 'paku', coef: 0.2 }
-        ]);
+        
+        // 3. ATAP
+        let roofCoef = 1.1, roofKey = matRoof;
+        if(matRoof === 'genteng_keramik') { 
+            // Konversi bh ke m2 (approx 14 bh/m2 sesuai Kanmuri)
+            prices['genteng_keramik_m2'] = { ...prices['genteng_keramik'], price: prices['genteng_keramik'].price * 14, unit: 'm2 set' }; 
+            roofKey = 'genteng_keramik_m2'; 
+            roofCoef = 1.05; 
+        } else if (matRoof === 'genteng_metal' || matRoof === 'seng_gelombang' || matRoof === 'atap_onduline') {
+            // Konversi lbr ke m2 (approx 1.5 - 2 lbr/m2 tergantung overlap, kita ambil harga per lembar dan koefisien per m2)
+            // Asumsi 1 lembar efektif menutupi 0.8 m2
+            const effectiveArea = matRoof === 'atap_onduline' ? 1.53 : 0.8; // Onduline lbh besar
+            prices[matRoof + '_m2'] = { ...prices[matRoof], price: prices[matRoof].price / effectiveArea, unit: 'm2 set' };
+            roofKey = matRoof + '_m2';
+        }
 
-        addItem("Pekerjaan Lantai", g.area, "m2", matFloor, 1.05, 0.45, [
-            { key: 'semen', coef: 0.2 }, { key: 'pasir', coef: 0.05 }
-        ]);
-
-        const areaPaint = volStruct * 35; 
-        addItem("Pengecatan & Finishing", areaPaint, "m2", "cat_kayu", 0.15, 0.2, [
-            { key: 'kuas', coef: 0.05 }, { key: 'amplas', coef: 0.5 }
-        ]);
+        addItem("Penutup Atap", g.roofArea, "m2", roofKey, roofCoef, 0.2, [{ key: 'paku', coef: 0.05 }]);
+        
+        // 4. LANTAI
+        let floorKey = matFloor;
+        if(matFloor === 'plester_aci') {
+             addItem("Pekerjaan Lantai (Rabat)", g.area, "m2", floorKey, 1.0, 0.5, []);
+        } else if (matFloor === 'lantai_paving') {
+             // Paving butuh pasir urug
+             addItem("Pekerjaan Paving Block", g.area, "m2", floorKey, 1.05, 0.35, [{ key: 'pasir', coef: 0.1 }]);
+        } else if (matFloor === 'lantai_papan_meranti') {
+             // Lantai kayu butuh paku
+             addItem("Lantai Papan Kayu", g.area, "m2", floorKey, 1.1, 0.6, [{ key: 'paku', coef: 0.2 }, { key: 'cat_kayu', coef: 0.2 }]);
+        } else {
+             // Keramik/Granit
+             addItem("Pekerjaan Lantai", g.area, "m2", floorKey, 1.03, 0.45, [{ key: 'semen', coef: 0.25 }, { key: 'pasir', coef: 0.045 }]);
+        }
 
         app.renderOutputs(items, profit, tax);
     },
@@ -721,83 +774,85 @@ const app = {
             const mainMatTotalCost = item.vol * bd.mainMat.coef * bd.mainMat.price;
             let laborTotalCost = bd.labor.reduce((s,x)=>s+x.total,0) * item.vol;
             
+            // RAB ROW
             const matReqString = `
-                <ul class="text-[10px] text-gray-500 mt-1 pl-4 list-none space-y-1">
-                    <li class="border-b border-gray-100 pb-1">
-                        <span class="font-bold text-gray-700">${bd.mainMat.name}</span><br>
-                        ${(item.vol * bd.mainMat.coef).toFixed(2)} ${bd.mainMat.unit} @ ${ui.fmt(bd.mainMat.price)} 
-                        = <span class="font-bold text-gray-600">${ui.fmt(mainMatTotalCost)}</span>
-                    </li>
-                    ${bd.auxMat.map(a => {
-                        const cost = item.vol * a.coef * a.price;
-                        return `<li>${a.name}: ${(item.vol * a.coef).toFixed(2)} ${a.unit} @ ${ui.fmt(a.price)} = ${ui.fmt(cost)}</li>`;
-                    }).join('')}
-                    <li class="text-indigo-600 pt-1 font-semibold">Total Upah: ${ui.fmt(laborTotalCost)}</li>
-                </ul>
-            `;
+                <div class="text-[10px] text-gray-400 mt-2 pl-3 border-l border-white/10 space-y-1">
+                    <div class="flex justify-between items-center bg-white/5 p-1 rounded">
+                        <span><b>${bd.mainMat.name}</b> <span class="text-xs text-blue-300">(${item.vol.toFixed(1)} x ${bd.mainMat.coef} koef)</span></span>
+                        <span class="text-gray-300 font-mono">${ui.fmt(mainMatTotalCost)}</span>
+                    </div>
+                    ${bd.auxMat.map(a => `
+                        <div class="flex justify-between text-gray-500 px-1">
+                            <span>${a.name} <span class="text-[9px]">(${(a.coef * item.vol).toFixed(2)} ${a.unit})</span></span>
+                            <span>${ui.fmt(a.coef * item.vol * a.price)}</span>
+                        </div>
+                    `).join('')}
+                    <div class="text-blue-400 font-semibold px-1 pt-1 border-t border-white/5 flex justify-between">
+                        <span>Total Upah Tenaga</span>
+                        <span>${ui.fmt(laborTotalCost)}</span>
+                    </div>
+                </div>`;
 
             rabBody.innerHTML += `
-            <tr class="align-top hover:bg-gray-50 transition-colors">
-                <td class="text-center py-4 border-b border-gray-100 text-gray-500 font-medium">${idx+1}</td>
-                <td class="py-4 px-4 border-b border-gray-100">
-                    <span class="font-bold text-gray-800 text-sm block mb-1">${item.title}</span>
+            <tr class="align-top hover:bg-white/5 group transition-colors border-b border-white/5 last:border-0">
+                <td class="text-center py-4 text-gray-500 font-bold group-hover:text-blue-400">${idx+1}</td>
+                <td class="py-4 px-4">
+                    <span class="font-bold text-gray-200 text-sm block mb-1">${item.title}</span>
                     ${matReqString}
                 </td>
-                <td class="text-center py-4 border-b border-gray-100 font-medium text-gray-600">${item.vol.toFixed(2)}</td>
-                <td class="text-center py-4 border-b border-gray-100 text-gray-500 text-xs uppercase">${item.unit}</td>
-                <td class="text-right py-4 px-4 border-b border-gray-100 text-gray-600 font-medium">${ui.fmt(item.unitPrice)}</td>
-                <td class="text-right py-4 px-4 border-b border-gray-100 font-bold text-gray-800">${ui.fmt(item.totalPrice)}</td>
+                <td class="text-center py-4 font-medium text-gray-400">${item.vol.toFixed(2)}</td>
+                <td class="text-center py-4 text-gray-500 text-xs uppercase">${item.unit}</td>
+                <td class="text-right py-4 px-4 text-gray-400 font-mono text-xs">${ui.fmt(item.unitPrice)}</td>
+                <td class="text-right py-4 px-4 font-bold text-blue-400 font-mono text-sm">${ui.fmt(item.totalPrice)}</td>
             </tr>`;
 
+            // AHSP ROW
             const auxRows = bd.auxMat.map(a => `
-                <tr class="border-b border-gray-100">
-                    <td class="pl-4 py-2 text-gray-600 border-r border-gray-100">${a.name}</td>
-                    <td class="text-center py-2 border-r border-gray-100 text-gray-500">${a.unit}</td>
-                    <td class="text-right py-2 border-r border-gray-100 px-3 text-gray-500">${ui.fmt(a.price)}</td>
-                    <td class="text-center py-2 border-r border-gray-100 text-gray-500">${a.coef.toFixed(3)}</td>
-                    <td class="text-right py-2 px-3 font-medium text-gray-700">${ui.fmt(a.total)}</td>
-                </tr>
-            `).join('');
+                <tr class="border-b border-white/5 hover:bg-white/5">
+                    <td class="pl-4 py-2 text-gray-300 border-r border-white/5">${a.name}</td>
+                    <td class="text-center py-2 border-r border-white/5 text-gray-400 text-xs">${a.unit}</td>
+                    <td class="text-center py-2 border-r border-white/5 text-gray-400 font-mono text-xs">${a.coef.toFixed(4)}</td>
+                    <td class="text-right py-2 border-r border-white/5 px-3 text-gray-400 font-mono text-xs">${ui.fmt(a.price)}</td>
+                    <td class="text-right py-2 px-3 font-medium text-gray-300 font-mono text-xs">${ui.fmt(a.total)}</td>
+                </tr>`).join('');
 
             const laborRows = bd.labor.map(l => `
-                <tr class="border-b border-gray-100">
-                    <td class="pl-4 py-2 text-gray-600 border-r border-gray-100">${l.role}</td>
-                    <td class="text-center py-2 border-r border-gray-100 text-gray-500">OH</td>
-                    <td class="text-right py-2 border-r border-gray-100 px-3 text-gray-500">${ui.fmt(l.price)}</td>
-                    <td class="text-center py-2 border-r border-gray-100 text-gray-500">${l.coef.toFixed(3)}</td>
-                    <td class="text-right py-2 px-3 font-medium text-gray-700">${ui.fmt(l.total)}</td>
-                </tr>
-            `).join('');
+                <tr class="border-b border-white/5 hover:bg-white/5">
+                    <td class="pl-4 py-2 text-gray-300 border-r border-white/5">${l.role}</td>
+                    <td class="text-center py-2 border-r border-white/5 text-gray-400 text-xs">OH</td>
+                    <td class="text-center py-2 border-r border-white/5 text-gray-400 font-mono text-xs">${l.coef.toFixed(4)}</td>
+                    <td class="text-right py-2 border-r border-white/5 px-3 text-gray-400 font-mono text-xs">${ui.fmt(l.price)}</td>
+                    <td class="text-right py-2 px-3 font-medium text-gray-300 font-mono text-xs">${ui.fmt(l.total)}</td>
+                </tr>`).join('');
 
             ahspContainer.innerHTML += `
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div class="bg-gradient-to-r from-gray-50 to-white px-5 py-3 border-b border-gray-200 flex justify-between items-center">
-                    <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-xs">AHSP-${idx+1}</span>
+            <div class="bg-slate-900/80 rounded-xl overflow-hidden border border-white/10 shadow-lg mb-8 break-inside-avoid">
+                <div class="bg-black/30 px-5 py-3 border-b border-white/10 flex justify-between items-center">
+                    <h4 class="font-bold text-gray-100 text-sm flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">${idx+1}</span> 
                         ${item.title}
                     </h4>
-                    <span class="text-xs bg-gray-100 border border-gray-200 px-3 py-1 rounded-full text-gray-600 font-medium">Satuan: 1 ${item.unit}</span>
+                    <span class="text-[10px] font-bold uppercase text-gray-400 bg-white/5 px-2 py-1 rounded border border-white/5">Analisis per 1 ${item.unit}</span>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-xs">
-                        <thead class="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
-                            <tr><th class="text-left py-2 px-4 w-1/3">Komponen</th><th class="text-center py-2 w-16">Sat</th><th class="text-right py-2 px-3">Harga Dasar</th><th class="text-center py-2 w-16">Koef</th><th class="text-right py-2 px-3">Jumlah</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-blue-50/30"><td colspan="5" class="py-1.5 px-4 font-bold text-blue-800 border-b border-blue-100/50">A. BAHAN & MATERIAL</td></tr>
-                            <tr class="border-b border-gray-100"><td class="pl-4 py-2 font-medium text-gray-800 border-r border-gray-100">${bd.mainMat.name}</td><td class="text-center py-2 border-r border-gray-100 text-gray-500">${bd.mainMat.unit}</td><td class="text-right py-2 border-r border-gray-100 px-3 text-gray-500">${ui.fmt(bd.mainMat.price)}</td><td class="text-center py-2 border-r border-gray-100 text-gray-500">${bd.mainMat.coef}</td><td class="text-right py-2 px-3 font-medium text-gray-700">${ui.fmt(bd.mainMat.base)}</td></tr>
-                            <tr class="border-b border-gray-100 bg-red-50/20"><td class="pl-8 py-2 italic text-gray-500 border-r border-gray-100 text-[10px]">└ Wastage (${document.getElementById('param_wastage').value}%)</td><td class="border-r border-gray-100" colspan="3"></td><td class="text-right py-2 px-3 text-gray-500 italic">${ui.fmt(bd.mainMat.waste)}</td></tr>
-                            ${auxRows}
-                            <tr class="bg-emerald-50/30"><td colspan="5" class="py-1.5 px-4 font-bold text-emerald-800 border-b border-emerald-100/50 border-t border-gray-100">B. UPAH TENAGA KERJA</td></tr>
-                            ${laborRows}
-                            <tr class="bg-amber-50/30"><td colspan="5" class="py-1.5 px-4 font-bold text-amber-800 border-b border-amber-100/50 border-t border-gray-100">C. PERALATAN</td></tr>
-                            <tr class="border-b border-gray-100"><td class="pl-4 py-2 text-gray-600 border-r border-gray-100">Sewa Alat Bantu (3% Upah)</td><td class="text-center py-2 border-r border-gray-100 text-gray-500">Ls</td><td class="border-r border-gray-100" colspan="2"></td><td class="text-right py-2 px-3 font-medium text-gray-700">${ui.fmt(bd.tool)}</td></tr>
-                        </tbody>
-                        <tfoot class="bg-gray-50 font-bold text-gray-900 border-t border-gray-200">
-                            <tr><td colspan="4" class="py-3 px-4 text-right">HARGA SATUAN PEKERJAAN (A+B+C)</td><td class="py-3 px-3 text-right text-sm text-indigo-700 font-bold">${ui.fmt(item.unitPrice)}</td></tr>
-                        </tfoot>
-                    </table>
-                </div>
+                <table class="w-full text-xs text-gray-300">
+                    <thead class="bg-black/20 text-gray-500 font-bold uppercase tracking-wider border-b border-white/5">
+                        <tr><th class="text-left py-2 px-4 w-1/3">Uraian</th><th class="text-center py-2 w-10">Sat</th><th class="text-center py-2 w-16">Koefisien</th><th class="text-right py-2 px-3">Harga Satuan Dasar</th><th class="text-right py-2 px-3">Jumlah Harga</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-blue-900/10"><td colspan="5" class="py-1 px-4 font-bold text-blue-400 border-b border-white/5 tracking-wide">A. TENAGA KERJA</td></tr>
+                        ${laborRows}
+                        <tr class="bg-amber-900/10"><td colspan="5" class="py-1 px-4 font-bold text-amber-400 border-b border-white/5 tracking-wide">B. BAHAN</td></tr>
+                        <tr class="border-b border-white/5"><td class="pl-4 py-2 font-bold text-gray-200 border-r border-white/5">${bd.mainMat.name}</td><td class="text-center py-2 border-r border-white/5 text-gray-400 text-xs">${bd.mainMat.unit}</td><td class="text-center py-2 border-r border-white/5 text-gray-400 font-mono text-xs">${bd.mainMat.coef}</td><td class="text-right py-2 border-r border-white/5 px-3 text-gray-400 font-mono text-xs">${ui.fmt(bd.mainMat.price)}</td><td class="text-right py-2 px-3 font-medium text-gray-200 font-mono text-xs">${ui.fmt(bd.mainMat.base)}</td></tr>
+                        ${auxRows}
+                        <tr class="border-b border-white/5 bg-red-900/10"><td class="pl-8 py-2 italic text-gray-400 border-r border-white/5 text-[10px]">Wastage (${document.getElementById('param_wastage').value}%)</td><td class="border-r border-white/5" colspan="3"></td><td class="text-right py-2 px-3 text-gray-400 italic font-mono text-xs">${ui.fmt(bd.mainMat.waste)}</td></tr>
+                        
+                        <tr class="bg-purple-900/10"><td colspan="5" class="py-1 px-4 font-bold text-purple-400 border-b border-white/5 tracking-wide">C. PERALATAN</td></tr>
+                        <tr class="border-b border-white/5"><td class="pl-4 py-2 text-gray-300 border-r border-white/5">Sewa Alat Bantu (5% Upah)</td><td class="text-center py-2 border-r border-white/5 text-gray-400 text-xs">Ls</td><td class="border-r border-white/5" colspan="2"></td><td class="text-right py-2 px-3 font-medium text-gray-300 font-mono text-xs">${ui.fmt(bd.tool)}</td></tr>
+                    </tbody>
+                    <tfoot class="bg-black/30 text-gray-100 font-bold border-t border-white/10">
+                        <tr><td colspan="4" class="py-2 px-4 text-right text-[10px] uppercase tracking-widest text-gray-500">Total Harga Satuan</td><td class="py-2 px-3 text-right text-sm font-mono text-blue-400">${ui.fmt(item.unitPrice)}</td></tr>
+                    </tfoot>
+                </table>
             </div>`;
         });
 
@@ -814,69 +869,6 @@ const app = {
         document.getElementById('val-physical').innerText = ui.fmt(subtotal);
         document.getElementById('val-total').innerText = ui.fmt(total);
         document.getElementById('val-perm2').innerText = ui.fmt(total / app.currentGeom.area) + " /m²";
-    }
-};
-
-const ui = {
-    fmt: (n) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n),
-    switchTab: (t) => {
-        ['desain', 'harga', 'settings'].forEach(x => {
-            document.getElementById(`content-${x}`).classList.add('hidden');
-            const btn = document.getElementById(`tab-${x}`);
-            btn.classList.remove('text-indigo-700', 'border-indigo-600', 'bg-white/50');
-            btn.classList.add('text-gray-500', 'hover:text-indigo-600', 'hover:bg-white/50');
-        });
-        document.getElementById(`content-${t}`).classList.remove('hidden');
-        const active = document.getElementById(`tab-${t}`);
-        active.classList.remove('text-gray-500', 'hover:text-indigo-600', 'hover:bg-white/50');
-        active.classList.add('text-indigo-700', 'border-indigo-600', 'bg-white/50');
-    },
-    switchReport: (view) => {
-        const rabBtn = document.getElementById('btn-view-rab');
-        const ahspBtn = document.getElementById('btn-view-ahsp');
-        
-        if(view === 'rab') {
-            document.getElementById('view-rab').classList.remove('hidden');
-            document.getElementById('view-ahsp').classList.add('hidden');
-            
-            rabBtn.classList.add('border-indigo-600', 'text-indigo-700', 'bg-indigo-50/50');
-            rabBtn.classList.remove('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
-            
-            ahspBtn.classList.remove('border-indigo-600', 'text-indigo-700', 'bg-indigo-50/50');
-            ahspBtn.classList.add('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
-        } else {
-            document.getElementById('view-rab').classList.add('hidden');
-            document.getElementById('view-ahsp').classList.remove('hidden');
-            
-            ahspBtn.classList.add('border-indigo-600', 'text-indigo-700', 'bg-indigo-50/50');
-            ahspBtn.classList.remove('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
-            
-            rabBtn.classList.remove('border-indigo-600', 'text-indigo-700', 'bg-indigo-50/50');
-            rabBtn.classList.add('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
-        }
-    },
-    renderPriceTable: () => {
-        const c = document.getElementById('price-list-container');
-        let h = '';
-        for(let k in prices) {
-            h += `<div class="flex items-center justify-between text-xs border-b border-gray-100 py-3 hover:bg-gray-50 px-2 rounded transition-colors group">
-                <div class="w-1/2">
-                    <div class="font-bold text-gray-700 group-hover:text-indigo-700 transition-colors">${prices[k].name}</div>
-                    <div class="text-[10px] text-gray-400 mt-1 flex items-center">
-                        <span class="mr-1">Sumber:</span> 
-                        <input type="text" value="${prices[k].source}" class="border border-gray-200 rounded px-1.5 py-0.5 w-28 text-gray-600 focus:outline-none focus:border-indigo-300 bg-white/50" onchange="app.updateSource('${k}',this.value)">
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded font-medium">/${prices[k].unit}</span>
-                    <div class="relative">
-                        <span class="absolute left-2 top-1.5 text-gray-400 font-sans">Rp</span>
-                        <input type="number" value="${prices[k].price}" class="border border-gray-200 rounded p-1 pl-6 w-24 text-right font-mono font-medium text-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" onchange="app.updatePrice('${k}',this.value)">
-                    </div>
-                </div>
-            </div>`;
-        }
-        c.innerHTML = h;
     }
 };
 
